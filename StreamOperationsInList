@@ -1,0 +1,32 @@
+/**
+ * The goal of this exercise is to use java streams on the given list. The list with fruits is provided and there are few things to do:
+ * 1. Remove duplicates from this list
+ * 2. Filter only names starting with letter "A" or "a"
+ * 3. Sort the list alphabetically
+ * It has to be done with one combined java stream.
+ * package org.example;
+ * import java.util.Arrays;
+ * import java.util.List;
+ * public class Main {
+ * public static void main(String[] args) {
+ * List<String> fruits = Arrays.asList("apple", "banana", "pear", "avocado", "plum");
+ * System.out.println("Fruits: " + fruits);
+ * }
+ * }
+ */
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class StreamOperationsInList {
+    public static void main(String[] args) {
+        List<String> fruits = Arrays.asList("apple", "banana", "pear", "avocado", "plum");
+        List<String> filteredList= fruits.stream().filter(Objects::nonNull)
+                .filter(s -> s.startsWith("A") || s.startsWith("a")).distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+        System.out.println("Fruits: " + filteredList);
+    }
+}
+
