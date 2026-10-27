@@ -1,0 +1,53 @@
+/**
+ * Write a method that extracts names and ages of users from a given string and finds users over the age of 20.
+ * For this purpose use the user class.
+ * Print the resulting users to the console.
+ * Expected output:
+ * John (25)
+ * George (30)
+ * Julia (22)
+ */
+import java.util.*;
+
+public class NamesAndAgesUsingStreams {
+    public static void main(String[] args) {
+        final String input = "John:25,Kate:19,George:30,Michael:18,Julia:22";
+
+        // 1. Split the string by comma to get individual "Name:Age" tokens
+        Arrays.stream(input.split(","))
+                // 2. Map each token to a User object
+                .map(pair -> {
+                    String[] parts = pair.split(":");
+                    return new User(parts[0], Integer.parseInt(parts[1]));
+                })
+                // 3. Filter for users strictly over the age of 20
+                .filter(user -> user.getAge() > 20)
+                // 4. Print the matching users to the console
+                .forEach(user -> System.out.println(user.getName() + " (" + user.getAge() + ") "));
+    }
+}
+
+class User1 {
+    String name;
+    int age;
+    public User1(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
