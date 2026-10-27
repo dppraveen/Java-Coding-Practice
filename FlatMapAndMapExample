@@ -1,0 +1,13 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class FlatMapAndMapExample
+{
+	public static void main(String[] args) {
+		List<List<Integer>> numbers= Arrays.asList(Arrays.asList(1,2), Arrays.asList(3,4,5), Arrays.asList(), Arrays.asList(6));
+        List<Integer> newList= numbers.stream().filter(Objects::nonNull)
+                            .flatMap( list -> list.stream())
+                            .map(x -> x*2).collect(Collectors.toList());
+        System.out.println(newList);
+	}
+}
