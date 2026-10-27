@@ -1,0 +1,52 @@
+/**
+ * Write a program using java streams that extracts names and ages of users from a given string.
+ * Print the resulting users to the console.
+ * Expected output:
+ * John (25)
+ * Kate (19)
+ * George (30)
+ * Michael (18)
+ * Julia (22)
+ */
+
+import java.util.*;
+public class NamesAndAges {
+    public static void main(String[] args) {
+        final String input = "John:25,Kate:19,George:30,Michael:18,Julia:22";
+        String[] users= input.split(",");
+        Map<String, Long> usersMap= new LinkedHashMap<>();
+        Arrays.asList(users).stream().filter(Objects::nonNull).forEach(user -> {
+          String[] user1= user.split(":");
+          String name= user1[0];
+          Long age= Long.valueOf(user1[1]);
+          usersMap.put(name, age);
+        });
+        usersMap.forEach((n,a) -> {
+            System.out.println(n + " (" + a + ")");
+        });
+    }
+}
+class User {
+    String name;
+    int age;
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
