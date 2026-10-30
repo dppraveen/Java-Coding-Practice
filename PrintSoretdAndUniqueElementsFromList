@@ -1,0 +1,20 @@
+//write a java code for printing unique and sorted elements from list.
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class PrintSoretdAndUniqueElementsFromList
+{
+	public static void main(String[] args) {
+	    List<Integer> numbers= Arrays.asList(1, 2, 1, 2, 3, 4, 6, 8 , 10, 10, 11, 8, 7, 5, 3, 12);
+	    List<Integer> uniqueNumbers = numbers.stream()
+                .filter(Objects::nonNull)
+                .distinct()
+                .collect(Collectors.toList());
+		System.out.println("Filtered Duplicates From List: " + uniqueNumbers);
+		List<Integer> sortedUniqueNumbers = numbers.stream()
+                .filter(Objects::nonNull)
+                .distinct().sorted()
+                .collect(Collectors.toList());
+        System.out.println("Sorted and Filtered Duplicates List is: " + sortedUniqueNumbers);		               
+	}
+}
