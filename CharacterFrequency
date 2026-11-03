@@ -1,0 +1,22 @@
+//write a method to count the frequency of your name which returns a Map with key as a character and value as a frequency count.
+//Example: input: String s="Praveen";
+//output: {P=1, r=1, a=1, v=1, e=2, n=1}
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class CharacterFrequency {
+	public static void main(String[] args) {
+		String s="Praveen";
+        System.out.println(countCharacters(s));
+	}
+	
+
+    public static Map<Character, Long> countCharacters(String s){
+ 
+        Map<Character, Long> countMap= s.chars().mapToObj(c -> (char) c)
+                    .collect(Collectors.groupingBy(c -> c, LinkedHashMap::new, Collectors.counting()));
+        return countMap;
+
+    }
+}
