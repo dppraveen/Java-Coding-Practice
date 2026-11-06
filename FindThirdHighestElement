@@ -1,0 +1,17 @@
+//Find the third highest number from the given integer array.
+//input: int[] ar = {1, 2, 3, 4, 5, 6, 8};
+//output: 5
+
+import java.util.*;
+
+public class FindThirdHighestElement {
+	public static void main(String[] args) {
+	    int[] ar= {1,2,3,4,5,6,8};
+	    Optional<Integer> thirdHighestNumber= Arrays.stream(ar).filter(Objects::nonNull)
+	                                        .boxed().distinct()
+	                                        .sorted(Comparator.reverseOrder())
+	                                        .skip(2).findFirst();
+	    
+		System.out.println(thirdHighestNumber.get());
+	}
+}
