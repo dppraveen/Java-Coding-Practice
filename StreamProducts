@@ -1,0 +1,90 @@
+/*
+ * Java Streams API Exercise
+ * Complete the TODO tasks using Stream API methods
+ */
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Product {
+    String name;
+    String category;
+    double price;
+    int quantity;
+
+    Product(String name, String category, double price, int quantity) {
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public String getName() { return name; }
+    public String getCategory() { return category; }
+    public double getPrice() { return price; }
+    public int getQuantity() { return quantity; }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
+    }
+}
+
+public class StreamProducts {
+    static void main() {
+        List<Product> products = Arrays.asList(
+                new Product("Laptop", "Electronics", 1200.0, 5),
+                new Product("Phone", "Electronics", 800.0, 10),
+                new Product("Tablet", "Electronics", 450.0, 8),
+                new Product("Chair", "Furniture", 150.0, 20),
+                new Product("Desk", "Furniture", 300.0, 15),
+                new Product("Lamp", "Furniture", 45.0, 30),
+                new Product("Notebook", "Stationery", 3.0, 100),
+                new Product("Pen", "Stationery", 1.5, 200)
+        );
+
+        // TODO 1: Get all product names from Electronics category sorted by price descending
+        List<String> electronicProductNames= products.stream().filter(Objects::nonNull)
+                .filter(e -> "Electronics".equalsIgnoreCase(e.getCategory()))
+                .map(Product::getName)
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        System.out.println("Electronics product names are: " + electronicProductNames);
+
+        // TODO 2: Calculate total value of all products (price * quantity for each, then sum)
+        double totalValue= products.stream().filter(Objects::nonNull)
+                .mapToDouble(p -> p.getPrice() * p.getQuantity())
+                .sum();
+        System.out.println("Sum of all products are: " + totalValue);
+
+        // TODO 3: Find the most expensive product
+        Optional<Product> expensiveProduct= products.stream().filter(Objects::nonNull)
+                .max(Comparator.comparing(Product::getPrice));
+        expensiveProduct.ifPresent(p ->
+                System.out.println("Expensive product is: " + p.getName() + " with price: " + p.getPrice()));
+
+        // TODO 4: Group products by category
+        Map<String, List<Product>> productMap= products.stream().filter(Objects::nonNull)
+                                        .collect(Collectors.groupingBy(p -> p.getCategory()));
+        productMap.forEach((category, productList) -> {
+            System.out.println("Category: " + category + " : " + productList);
+        });
+
+        // TODO 5: Get the average price of products in Furniture category
+        OptionalDouble avg= products.stream().filter(Objects::nonNull)
+                .filter(p -> "Furniture".equalsIgnoreCase(p.getCategory()))
+                .mapToDouble(p -> p.getPrice())
+                .average();
+        System.out.println("Average of furniture products is: " + avg.orElse(0.0));
+
+        // TODO 6: Check if all products have quantity greater than 0
+        boolean isQtyGreaterThanZero= products.stream().filter(Objects::nonNull).allMatch(p -> p.getQuantity() > 0);
+        System.out.println("All products have Qty greater than zero: " + isQtyGreaterThanZero);
+    }
+}
+
